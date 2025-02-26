@@ -6,6 +6,8 @@ import com.demoProject.Scinema.dto.request.ApiResponse;
 import com.demoProject.Scinema.dto.request.UserCreationRequest;
 import com.demoProject.Scinema.dto.request.UserUpdateRequest;
 import com.demoProject.Scinema.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,10 @@ public class UserController
     UserService userService;
 
     @PostMapping
+    @Operation(summary = "Tạo mới người dùng", description = "Tạo một người dùng mới")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Người dùng được tạo thành công")
+    })
     ApiResponse<UserResponse> createUser(@RequestBody @Valid UserCreationRequest request)
     {
         return ApiResponse.<UserResponse>builder()
@@ -48,6 +54,11 @@ public class UserController
     }
 
     @GetMapping("/{userId}")
+    @Operation(summary = "Lấy thông tin người dùng theo ID", description = "Trả về thông tin của người dùng dựa trên ID")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Thông tin người dùng"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Không tìm thấy người dùng")
+    })
     ApiResponse<UserResponse> getUser(@PathVariable("userId") String userId)
     {
         return ApiResponse.<UserResponse>builder()
