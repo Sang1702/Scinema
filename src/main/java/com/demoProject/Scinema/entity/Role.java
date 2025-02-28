@@ -22,7 +22,7 @@ public class Role
 
     @ManyToMany
     @JoinTable(
-            name = "role_permissions",
+            name = "role_permission",
             joinColumns = @JoinColumn(name = "role_name"),
             inverseJoinColumns = @JoinColumn(name = "permission_name")
     )

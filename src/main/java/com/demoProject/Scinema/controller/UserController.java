@@ -8,6 +8,7 @@ import com.demoProject.Scinema.dto.request.UserUpdateRequest;
 import com.demoProject.Scinema.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Tag(name = "User Controller")
 public class UserController
 {
     UserService userService;
@@ -41,12 +43,18 @@ public class UserController
     }
 
     @GetMapping
+    @Operation(summary = "Lấy ra danh sách người dùng", description = "Trả về 1 danh sách của tất cả các người dùng")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Danh sách người dùng"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Chưa có người dùng nào được tạo ra")
+    })
     ApiResponse<List<UserResponse>> getUsers()
     {
         var authentication =  SecurityContextHolder.getContext().getAuthentication();
 
         log.info("Username : {}", authentication.getName());
-        authentication.getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+        authentication.getAuthorities().forEach(
+                grantedAuthority -> log.info(grantedAuthority.getAuthority()));
 
         return ApiResponse.<List<UserResponse>>builder()
                 .result(userService.getUsers())
@@ -67,6 +75,11 @@ public class UserController
     }
 
     @GetMapping("/myInfo")
+    @Operation(summary = "Lấy thông tin của bản thân", description = "Trả về thông tin của bản thân")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Thông tin của bản thân"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Không tìm thấy thông tin của bạn")
+    })
     ApiResponse<UserResponse> getMyInfo()
     {
         return ApiResponse.<UserResponse>builder()

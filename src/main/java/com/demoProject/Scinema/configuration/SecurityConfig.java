@@ -24,17 +24,18 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENPOINTS = {"/users", "/auth/token", "/auth/introspect"};
+    private final String[] PUBLIC_ENPOINTS = {"/swagger-ui/**", "/v3/api-docs/**","/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/users", "/auth/token", "/auth/introspect"};
 
     @Value("${signer.key}")
     private String signerKey;
 
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST, PUBLIC_ENPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users")
-                            .hasRole("ADMIN")
+                request.requestMatchers(HttpMethod.GET, PUBLIC_ENPOINTS).permitAll()  // Allow GET requests for Swagger and related endpoints
+                        .requestMatchers(HttpMethod.POST, "/auth/token", "/auth/introspect").permitAll()  // Allow POST requests for auth-related endpoints
+                        .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")  // Restrict /users to users with ADMIN role
                         .anyRequest().authenticated());
         httpSecurity.oauth2ResourceServer(
                 oauth2 ->

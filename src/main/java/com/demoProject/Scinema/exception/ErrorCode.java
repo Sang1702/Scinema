@@ -16,6 +16,7 @@ public enum ErrorCode
     UNAUTHENTICATED(1006, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     DATABASE_ERROR(1008, "Database error", HttpStatus.INTERNAL_SERVER_ERROR),
+    MOVIE_NOT_FOUND(1009, "Movie not found", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {
