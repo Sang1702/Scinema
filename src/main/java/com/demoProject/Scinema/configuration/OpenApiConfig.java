@@ -46,7 +46,7 @@ public class OpenApiConfig
     public GroupedOpenApi groupedOpenApi()
     {
         return GroupedOpenApi.builder()
-                .group("default")
+                .group("api-service")
                 .packagesToScan("com.demoProject.Scinema.controller")
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.demoProject.Scinema.dto.request;
 
+import com.demoProject.Scinema.validator.DobConstraint;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,6 +28,6 @@ public class UserCreationRequest
     @Email(message = "Invalid email format")
     String email;
 
-    @Past(message = "Date of birth must be in the past")
+    @DobConstraint(min = 18, message = "INVALID_DOB")
     LocalDate dob;
 }
