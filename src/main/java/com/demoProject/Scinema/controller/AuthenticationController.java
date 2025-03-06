@@ -6,6 +6,7 @@ import com.demoProject.Scinema.dto.reponse.IntrospectResponse;
 import com.demoProject.Scinema.dto.request.ApiResponse;
 import com.demoProject.Scinema.dto.request.AuthenticationRequest;
 import com.demoProject.Scinema.dto.request.IntrospectRequest;
+import com.demoProject.Scinema.dto.request.LogoutRequest;
 import com.demoProject.Scinema.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import lombok.AccessLevel;
@@ -41,6 +42,14 @@ public class AuthenticationController
         var result = authenticationService.introspect(request);
         return ApiResponse.<IntrospectResponse>builder()
                 .result(result)
+                .build();
+    }
+
+    @PostMapping("/logout")
+    ApiResponse<Void> logout(@RequestBody LogoutRequest request)
+            throws ParseException, JOSEException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder()
                 .build();
     }
 
