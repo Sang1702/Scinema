@@ -34,7 +34,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.GET, PUBLIC_ENPOINTS).permitAll()  // Allow GET requests for Swagger and related endpoints
-                        .requestMatchers(HttpMethod.POST, "/auth/token", "/auth/introspect").permitAll()  // Allow POST requests for auth-related endpoints
+                        .requestMatchers(HttpMethod.POST, "/auth/token", "/auth/introspect", "/users").permitAll()  // Allow POST requests for auth-related endpoints
                         .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")  // Restrict /users to users with ADMIN role
                         .anyRequest().authenticated());
         httpSecurity.oauth2ResourceServer(

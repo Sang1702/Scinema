@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class UserCreationRequest
 {
     @NotBlank(message = "Username cannot be empty")
-            @Size(min = 3, message = "USERNAME_INVALID")
+    @Size(min = 3, message = "USERNAME_INVALID")
     String username;
     @Size(min = 8, message = "PASSWORD_INVALID")
     @NotBlank(message = "Password cannot be empty")
