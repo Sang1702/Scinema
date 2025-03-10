@@ -6,6 +6,7 @@ import com.demoProject.Scinema.dto.reponse.IntrospectResponse;
 import com.demoProject.Scinema.dto.request.AuthenticationRequest;
 import com.demoProject.Scinema.dto.request.IntrospectRequest;
 import com.demoProject.Scinema.dto.request.LogoutRequest;
+import com.demoProject.Scinema.dto.request.RefreshRequest;
 import com.demoProject.Scinema.entity.InvalidatedToken;
 import com.demoProject.Scinema.entity.User;
 import com.demoProject.Scinema.exception.AppException;
@@ -76,6 +77,34 @@ public class AuthenticationService
         {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
+
+        var token = generateToken(user);  // Sửa lại từ request.getUsername() thành user
+
+        return AuthenticationResponse.builder()
+                .token(token)
+                .isAuthenticated(true)
+                .build();
+    }
+
+    public AuthenticationResponse refreshToken(RefreshRequest request) throws ParseException, JOSEException {
+        //Kiem tra hieu luc cua token
+        var signJWT = verifyToken(request.getToken());
+
+        var jit = signJWT.getJWTClaimsSet().getJWTID();
+        var expiryTime = signJWT.getJWTClaimsSet().getExpirationTime();
+
+        InvalidatedToken invalidatedToken = InvalidatedToken.builder()
+                .id(jit)
+                .expiryTime(expiryTime)
+                .build();
+
+        invalidatedTokenRepository.save(invalidatedToken);
+
+        var username = signJWT.getJWTClaimsSet().getSubject();
+
+        var user = userRepository.findByUsername(username).orElseThrow(
+                () -> new AppException(ErrorCode.UNAUTHENTICATED)
+        );
 
         var token = generateToken(user);  // Sửa lại từ request.getUsername() thành user
 

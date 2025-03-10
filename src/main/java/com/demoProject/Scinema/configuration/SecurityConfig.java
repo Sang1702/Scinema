@@ -25,7 +25,7 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENPOINTS = {"/swagger-ui/**", "/v3/api-docs/**","/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/users", "/auth/token", "/auth/introspect", "/auth/logout"};
+    private final String[] PUBLIC_ENPOINTS = {"/swagger-ui/**", "/v3/api-docs/**","/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/users", "/auth/token", "/auth/introspect", "/auth/logout", "/auth/refresh"};
 
 
     @Autowired

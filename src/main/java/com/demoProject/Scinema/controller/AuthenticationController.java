@@ -3,10 +3,7 @@ package com.demoProject.Scinema.controller;
 
 import com.demoProject.Scinema.dto.reponse.AuthenticationResponse;
 import com.demoProject.Scinema.dto.reponse.IntrospectResponse;
-import com.demoProject.Scinema.dto.request.ApiResponse;
-import com.demoProject.Scinema.dto.request.AuthenticationRequest;
-import com.demoProject.Scinema.dto.request.IntrospectRequest;
-import com.demoProject.Scinema.dto.request.LogoutRequest;
+import com.demoProject.Scinema.dto.request.*;
 import com.demoProject.Scinema.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import lombok.AccessLevel;
@@ -41,6 +38,14 @@ public class AuthenticationController
             throws ParseException, JOSEException {
         var result = authenticationService.introspect(request);
         return ApiResponse.<IntrospectResponse>builder()
+                .result(result)
+                .build();
+    }
+
+    @PostMapping("/refresh")
+    ApiResponse<AuthenticationResponse> authenticate(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
+        var result = authenticationService.refreshToken(request);
+        return ApiResponse.<AuthenticationResponse>builder()
                 .result(result)
                 .build();
     }
