@@ -131,7 +131,7 @@ public class AuthenticationService
                 .issuer("SCINEMA")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(VALIDATION_DURATION, ChronoUnit.MINUTES).toEpochMilli()
+                        Instant.now().plus(VALIDATION_DURATION, ChronoUnit.SECONDS).toEpochMilli()
                 ))
                 .jwtID(UUID.randomUUID().toString())
                 .claim("scope", buildScope(user))  // dùng buildScope(user) thay vì username
@@ -173,7 +173,7 @@ public class AuthenticationService
 
         Date expiryTime =(isRefresh)
                 ? new Date(signedJWT.getJWTClaimsSet().getIssueTime()
-                    .toInstant().plus(REFRESHABLE_DURATION, ChronoUnit.MINUTES).toEpochMilli())
+                    .toInstant().plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS).toEpochMilli())
                 : signedJWT.getJWTClaimsSet().getExpirationTime();
 
         var verified =  signedJWT.verify(verifier);

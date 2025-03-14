@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,11 +22,15 @@ public class Schedule {
 
     LocalDate start_date;
     LocalTime hourStart;
-    Double price;
+    double price;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id")
-    Movie movie;
+    @JoinColumn(name = "movie_id", nullable = false)
+    private Movie movie;
+
+    @ManyToOne
+    @JoinColumn(name = "theater_id", nullable = false)
+    Theater theater;
 
     @ManyToOne
     @JoinColumn(name = "room_id")
