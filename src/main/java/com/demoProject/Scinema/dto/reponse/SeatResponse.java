@@ -1,9 +1,9 @@
-package com.demoProject.Scinema.dto.request;
+package com.demoProject.Scinema.dto.reponse;
 
 import lombok.Data;
 
 @Data
-public class SeatRequest
+public class SeatResponse
 {
     private String id;
     private String name;

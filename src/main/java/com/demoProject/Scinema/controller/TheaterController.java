@@ -2,7 +2,6 @@ package com.demoProject.Scinema.controller;
 
 import com.demoProject.Scinema.dto.reponse.TheaterResponse;
 import com.demoProject.Scinema.dto.request.ApiResponse;
-import com.demoProject.Scinema.repository.TheaterRepository;
 import com.demoProject.Scinema.service.TheaterService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
